@@ -2,6 +2,11 @@
 *.fits
 *.fits.gz
 
+# Analysis output files
+*.png
+*.pdf
+*_spectrum_*.txt
+
 # Python
 __pycache__/
 *.py[cod]
@@ -66,6 +71,11 @@ cutouts/
 downloads/
 output/
 data/
+results/
+plots/
+paper_plots/
+survey_cutouts/
+full_survey/
 
 # Log files
 *.log
