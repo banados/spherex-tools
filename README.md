@@ -1,6 +1,6 @@
 # SPHEREx Data Downloader
 
-A Python script to download SPHEREx (Spectro-Photometer for the History of the Universe, Epoch of Reionization and Ices Explorer) data from IRSA for a list of astronomical coordinates.
+A Python script to download SPHEREx data from IRSA for a list of astronomical coordinates.
 
 ## Features
 
@@ -102,7 +102,7 @@ python get_stamps_spherex.py -i targets.txt --cutout --radius 10 --cutout_size 0
 ### Cutouts
 - **Filename**: `{name}_cutout_{original_spherex_filename}.fits`  
 - **Example**: `NGC6888_cutout_level2_2025W19_1B_0501_2D5_spx_l2b-v11-2025-162.fits`
-- **Size**: Much smaller (~few MB)
+- **Size**: Much smaller (~few KB)
 - **Content**: Small stamp centered on your coordinates
 
 ## Examples
@@ -122,22 +122,11 @@ python get_stamps_spherex.py -i my_galaxies.txt --cutout --output_dir galaxy_cut
 python get_stamps_spherex.py -i survey_targets.txt --radius 5 --output_dir full_survey/
 ```
 
-## SPHEREx Mission Information
-
-SPHEREx launched in March 2025 and provides:
-- **All-sky near-infrared spectroscopy** (0.75-5.0 μm)
-- **96 spectral channels** across the wavelength range  
-- **Regular data releases** through IRSA
-- **Unprecedented spectral survey** of the entire sky
 
 ## Troubleshooting
 
 ### Common Issues
 
-**"No SPHEREx data found"**
-- Try increasing the search radius: `--radius 10`
-- Check your coordinates are in decimal degrees
-- Verify the object is in SPHEREx coverage area
 
 **"File already exists"**
 - Use `--overwrite` to replace existing files
@@ -167,16 +156,3 @@ Issues and pull requests welcome! Please ensure any changes maintain compatibili
 
 MIT License - see LICENSE file for details.
 
-## Citation
-
-If you use this tool in your research, please cite:
-- The SPHEREx mission papers
-- IRSA/IPAC for data hosting
-- astroquery for the query interface
-
-## Acknowledgments
-
-- **SPHEREx Team** for the amazing mission and data
-- **IRSA/IPAC** for data hosting and access infrastructure  
-- **astroquery developers** for the query interface
-- **astropy community** for the foundational tools
