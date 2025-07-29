@@ -1,0 +1,14 @@
+# SPHEREx Data Downloader Requirements
+# Minimum versions for SPHEREx data access
+
+# Core astronomy packages
+astropy>=5.0
+astroquery>=0.4.10
+
+# Optional but recommended for data analysis
+matplotlib>=3.5
+numpy>=1.20
+
+# For Jupyter notebook usage (optional)
+jupyter
+ipython>=8.0
