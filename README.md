@@ -54,29 +54,29 @@ Crab 83.633 22.0145
 
 ```bash
 # Download full SPHEREx files
-python get_stamps_spherex.py -i targets.txt
+python get_cutouts_spherex.py -i targets.txt
 
 # Download small cutouts (recommended for quick analysis)
-python get_stamps_spherex.py -i targets.txt --cutout
+python get_cutouts_spherex.py -i targets.txt --cutout
 ```
 
 ### Advanced Options
 
 ```bash
 # Custom search radius
-python get_stamps_spherex.py -i targets.txt --radius 5
+python get_cutouts_spherex.py -i targets.txt --radius 5
 
 # Custom cutout size (in degrees)
-python get_stamps_spherex.py -i targets.txt --cutout --cutout_size 0.02
+python get_cutouts_spherex.py -i targets.txt --cutout --cutout_size 0.02
 
 # Specify output directory
-python get_stamps_spherex.py -i targets.txt --output_dir spherex_data/
+python get_cutouts_spherex.py -i targets.txt --output_dir spherex_data/
 
 # Overwrite existing files
-python get_stamps_spherex.py -i targets.txt --overwrite
+python get_cutouts_spherex.py -i targets.txt --overwrite
 
 # Combine options
-python get_stamps_spherex.py -i targets.txt --cutout --radius 10 --cutout_size 0.015 --output_dir cutouts/
+python get_cutouts_spherex.py -i targets.txt --cutout --radius 10 --cutout_size 0.015 --output_dir cutouts/
 ```
 
 ## Command Line Options
@@ -110,16 +110,16 @@ python get_stamps_spherex.py -i targets.txt --cutout --radius 10 --cutout_size 0
 ### Quick Start
 ```bash
 # Test with the provided example file
-python get_stamps_spherex.py -i example_targets.txt --cutout
+python get_cutouts_spherex.py -i example_targets.txt --cutout
 
 # Download cutouts for multiple objects
-python get_stamps_spherex.py -i my_galaxies.txt --cutout --output_dir galaxy_cutouts/
+python get_cutouts_spherex.py -i my_galaxies.txt --cutout --output_dir galaxy_cutouts/
 ```
 
 ### Large Survey Mode
 ```bash
 # Download full files for detailed analysis (warning: large files!)
-python get_stamps_spherex.py -i survey_targets.txt --radius 5 --output_dir full_survey/
+python get_cutouts_spherex.py -i survey_targets.txt --radius 5 --output_dir full_survey/
 ```
 
 
@@ -139,7 +139,7 @@ python get_stamps_spherex.py -i survey_targets.txt --radius 5 --output_dir full_
 ### Getting Help
 
 ```bash
-python get_stamps_spherex.py --help
+python get_cutouts_spherex.py --help
 ```
 
 ## Dependencies
