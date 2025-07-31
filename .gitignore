@@ -6,6 +6,7 @@
 *.png
 *.pdf
 *_spectrum_*.txt
+*.csv
 
 # Python
 __pycache__/
@@ -71,6 +72,7 @@ cutouts/
 downloads/
 output/
 data/
+coverage/
 results/
 plots/
 paper_plots/
