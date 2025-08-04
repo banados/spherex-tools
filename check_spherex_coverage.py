@@ -43,6 +43,8 @@ python check_spherex_coverage.py -i catalog.csv --retry-errors
 # Retry errors with frequent progress updates
 python check_spherex_coverage.py -i catalog.csv --retry-errors --progress 5
 
+python check_spherex_coverage.py -i ~/Dropbox/ps1_results/known_hqz/known_hzq.csv  --progress 10 --output qsos_spherex_aug1.csv
+
 Input file formats supported:
 - CSV: catalog.csv with any number of columns
 - Space-separated: targets.txt  

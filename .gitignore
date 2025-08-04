@@ -76,8 +76,12 @@ coverage/
 results/
 plots/
 paper_plots/
+plots_brown_dwarfs/
 survey_cutouts/
 full_survey/
+quasar_cutouts/
+brown_dwarf_cutouts/
+templates/
 
 # Log files
 *.log
