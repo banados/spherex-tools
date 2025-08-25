@@ -13,14 +13,14 @@ from astroquery.ipac.irsa import Irsa
 from astropy.coordinates import SkyCoord
 from astropy.io import ascii
 
-try:
-    from urllib2 import urlopen  # python2
-    from httplib import IncompleteRead
-    from urllib2 import HTTPError
-except ImportError:
-    from urllib.request import urlopen  # python3
-    from urllib.error import HTTPError
-    from http.client import IncompleteRead
+# try:
+#     from urllib2 import urlopen  # python2
+#     from httplib import IncompleteRead
+#     from urllib2 import HTTPError
+# except ImportError:
+from urllib.request import urlopen  # python3
+from urllib.error import HTTPError
+from http.client import IncompleteRead
 
 EXAMPLES = """
 Examples:
@@ -263,8 +263,11 @@ def build_download_url(access_url, cutout=False, ra=None, dec=None, cutout_size=
         # Extract the path after /ibe/data/
         if access_url.startswith('ibe/data/'):
             data_path = access_url[9:]  # Remove 'ibe/data/'
+        # extract the path after https://irsa.ipac.caltech.edu/ibe/data/
+        elif access_url.startswith('https://irsa.ipac.caltech.edu/ibe/data/'):
+            data_path = access_url[39:]  # Remove 'https://irsa.ipac.caltech.edu/ibe/data/'s
         else:
-            # Handle case where access_url might not start with ibe/data/
+            # Handle case where access_url might not start with strings above (TBD)
             data_path = access_url
         
         cutout_url = f"{base_url}ibe/cutout?ra={ra}&dec={dec}&size={cutout_size}&path={data_path}"

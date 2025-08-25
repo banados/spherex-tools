@@ -223,7 +223,7 @@ def scale_template_to_data(wave_data, flux_data, wave_template, flux_template):
     """
     
     # Find overlapping wavelength range
-    wave_min = max(wave_data.min(), wave_template.min(), 3.0)
+    wave_min = max(wave_data.min(), wave_template.min(), 2.1)#, 3.0)
     wave_max = min(wave_data.max(), wave_template.max())
     
     if wave_min >= wave_max:

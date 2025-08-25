@@ -8,6 +8,7 @@
 *_spectrum_*.txt
 *.csv
 qsos*.txt
+*qso*.txt
 
 # Python
 __pycache__/
