@@ -80,10 +80,10 @@ def extract_spherex_from_files(file_list, mask2=None, cr_thresh=10.0):
                     
                 # Determine wavelength at center of cutout
                 # Wavelength map is provided as a 2D interpolation map
-                wx = hdul[2].data['X'][0]
-                wy = hdul[2].data['Y'][0]
-                wval = hdul[2].data['VALUES'][0][:, :, 0]
-                dwval = hdul[2].data['VALUES'][0][:, :, 1]
+                wx = hdul['WCS-WAVE'].data['X'][0]
+                wy = hdul['WCS-WAVE'].data['Y'][0]
+                wval = hdul['WCS-WAVE'].data['VALUES'][0][:, :, 0]
+                dwval = hdul['WCS-WAVE'].data['VALUES'][0][:, :, 1]
                 interp_wave = RegularGridInterpolator((wx, wy), wval)
                 interp_dwave = RegularGridInterpolator((wx, wy), dwval)
                 wave[ii] = interp_wave((3 - hdul[1].header['CRPIX2W'], 3 - hdul[1].header['CRPIX1W']))
