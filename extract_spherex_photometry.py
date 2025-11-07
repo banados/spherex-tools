@@ -9,6 +9,7 @@ import sys
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
+from IPython import embed
 
 # Import the SPHEREx utilities (assumes spherex_utils.py is in the same directory)
 try:
@@ -80,14 +81,30 @@ def extract_spherex_from_files(file_list, mask2=None, cr_thresh=10.0):
                     
                 # Determine wavelength at center of cutout
                 # Wavelength map is provided as a 2D interpolation map
-                wx = hdul['WCS-WAVE'].data['X'][0]
-                wy = hdul['WCS-WAVE'].data['Y'][0]
-                wval = hdul['WCS-WAVE'].data['VALUES'][0][:, :, 0]
-                dwval = hdul['WCS-WAVE'].data['VALUES'][0][:, :, 1]
-                interp_wave = RegularGridInterpolator((wx, wy), wval)
-                interp_dwave = RegularGridInterpolator((wx, wy), dwval)
-                wave[ii] = interp_wave((3 - hdul['IMAGE'].header['CRPIX2W'], 3 - hdul['IMAGE'].header['CRPIX1W']))
-                dwave[ii] = interp_dwave((3 - hdul['IMAGE'].header['CRPIX2W'], 3 - hdul['IMAGE'].header['CRPIX1W']))
+                
+                wx = hdul['WCS-WAVE'].data['X']
+                if len(wx.shape)==1:
+                    wy = hdul['WCS-WAVE'].data['Y']
+                    wval = hdul['WCS-WAVE'].data['VALUES'][:, :, 0]
+                    dwval = hdul['WCS-WAVE'].data['VALUES'][:, :, 1]
+                else:
+                    wx = hdul['WCS-WAVE'].data['X'][0]
+                    wy = hdul['WCS-WAVE'].data['Y'][0]
+                    wval = hdul['WCS-WAVE'].data['VALUES'][0][:, :, 0]
+                    dwval = hdul['WCS-WAVE'].data['VALUES'][0][:, :, 1]
+
+                if wval.shape[0] != len(wx):
+                    wval = wval.T
+                    dwval = dwval.T
+                    interp_wave = RegularGridInterpolator((wx, wy), wval)
+                    interp_dwave = RegularGridInterpolator((wx, wy), dwval)
+                    wave[ii] = interp_wave((3 - hdul['IMAGE'].header['CRPIX1W'], 3 - hdul['IMAGE'].header['CRPIX2W']))
+                    dwave[ii] = interp_dwave((3 - hdul['IMAGE'].header['CRPIX1W'], 3 - hdul['IMAGE'].header['CRPIX2W']))
+                else:
+                    interp_wave = RegularGridInterpolator((wx, wy), wval)
+                    interp_dwave = RegularGridInterpolator((wx, wy), dwval)
+                    wave[ii] = interp_wave((3 - hdul['IMAGE'].header['CRPIX2W'], 3 - hdul['IMAGE'].header['CRPIX1W']))
+                    dwave[ii] = interp_dwave((3 - hdul['IMAGE'].header['CRPIX2W'], 3 - hdul['IMAGE'].header['CRPIX1W']))
                 
                 # Extremely rough estimate of the variance (full images have a proper variance map, but not cutouts...)
                 # First remove the highest and lowest pixels from the sky (sort of like outlier masking)
