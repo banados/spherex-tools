@@ -19,7 +19,7 @@ except ImportError:
     print("Please make sure spherex_utils.py is in the same directory as this script")
     sys.exit(1)
 
-def extract_spherex_from_files(file_list, mask2=None, cr_thresh=10.0):
+def extract_spherex_from_files(file_list, mask2=None, cr_thresh=10.0, bright=False):
     """
     Modified version of extract_spherex that works with a provided file list
     instead of searching for files with a hardcoded pattern
@@ -66,6 +66,8 @@ def extract_spherex_from_files(file_list, mask2=None, cr_thresh=10.0):
                 mask = np.zeros_like(img, dtype=bool)
                 mask[2:4, 2:4] = True
                 mask[np.isnan(img)] = False  # remove phantom pixels
+                if bright:
+                    mask[:,:] = True
 
                 # Sky mask is everything else
                 sky = ~mask
@@ -75,7 +77,10 @@ def extract_spherex_from_files(file_list, mask2=None, cr_thresh=10.0):
                 
                 # "Aperture photometry"
                 # Sum the flux inside the object mask, remove the median sky times the number of object pixels
-                flux[ii] = np.sum(img[mask]) - np.median(img[sky]) * (np.sum(mask))
+                if bright:
+                    flux[ii] = np.sum(img)
+                else:
+                    flux[ii] = np.sum(img[mask]) - np.median(img[sky]) * (np.sum(mask))
                 if mask2 is not None:
                     flux2[ii] = np.sum(img[mask2]) - np.median(img[sky]) * (np.sum(mask2))
                     
@@ -785,6 +790,9 @@ def parse_arguments():
 
     parser.add_argument('--cr_thresh', type=float, default=10.0,
                        help='Cosmic ray threshold in MJy/sr (default: 10.0)')
+                       
+    parser.add_argument('--bright', action='store_true', default=False,
+                       help='Skip background subtraction (bright objects only)')
 
     parser.add_argument('--show_template', type=str, default=None,
                        help='Show quasar template overlay (available: vandenberk01)')
@@ -878,7 +886,7 @@ def main():
             print(f"Could not examine first file: {e}")
     
     try:
-        wave, dwave, flux, var = extract_spherex_from_files(cutout_files, cr_thresh=args.cr_thresh)
+        wave, dwave, flux, var = extract_spherex_from_files(cutout_files, cr_thresh=args.cr_thresh, bright=args.bright)
     except Exception as e:
         print(f"Error extracting photometry: {e}")
         import traceback
