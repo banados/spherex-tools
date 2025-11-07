@@ -53,7 +53,7 @@ def extract_spherex_from_files(file_list, mask2=None, cr_thresh=10.0):
     for ii in range(len(files)):
         try:
             hdul = fits.open(files[ii])
-            img = hdul[1].data
+            img = hdul['IMAGE'].data
             processed_count += 1
             
             # For now, we only use images where the object is more than 3 pixels away from any edge
@@ -86,18 +86,18 @@ def extract_spherex_from_files(file_list, mask2=None, cr_thresh=10.0):
                 dwval = hdul['WCS-WAVE'].data['VALUES'][0][:, :, 1]
                 interp_wave = RegularGridInterpolator((wx, wy), wval)
                 interp_dwave = RegularGridInterpolator((wx, wy), dwval)
-                wave[ii] = interp_wave((3 - hdul[1].header['CRPIX2W'], 3 - hdul[1].header['CRPIX1W']))
-                dwave[ii] = interp_dwave((3 - hdul[1].header['CRPIX2W'], 3 - hdul[1].header['CRPIX1W']))
+                wave[ii] = interp_wave((3 - hdul['IMAGE'].header['CRPIX2W'], 3 - hdul['IMAGE'].header['CRPIX1W']))
+                dwave[ii] = interp_dwave((3 - hdul['IMAGE'].header['CRPIX2W'], 3 - hdul['IMAGE'].header['CRPIX1W']))
                 
                 # Extremely rough estimate of the variance (full images have a proper variance map, but not cutouts...)
                 # First remove the highest and lowest pixels from the sky (sort of like outlier masking)
-                skymask = sky & (img > img[sky].min()) & (img < img[sky].max())
+                #skymask = sky & (img > img[sky].min()) & (img < img[sky].max())
                 # Variance of each pixel is first approximated by variance of sky pixels
-                var[ii] = np.sum(mask) * np.var(img[skymask])
+                var[ii] =  np.sum(mask*hdul['VARIANCE'].data)
                 # Now we adjust the variance higher assuming that variance is proportional to flux
                 # but we only include the pixels above the sky background to avoid decreasing it
-                posmask = img[mask] > np.median(img[sky])
-                var[ii] *= 1 + np.sum(((img[mask] - np.median(img[sky])) / np.median(img[sky]))[posmask])
+                #posmask = img[mask] > np.median(img[sky])
+                #var[ii] *= 1 + np.sum(((img[mask] - np.median(img[sky])) / np.median(img[sky]))[posmask])
                 
             else:
                 good[ii] = False
