@@ -637,8 +637,8 @@ def plot_spherex_spectrum(wave, flam, std, dwave, name, redshift=None,
     # Add emission line markers if redshift is provided
     if redshift is not None:
         # Common emission lines in Angstroms (rest frame)
-        line_list = [6564.6, 5008.2, 4862.7, 2800.0, 1908.7, 1550.0, 1215.67]
-        line_names = ['Hα', '[OIII]', 'Hβ', 'MgII', 'CIII]', 'CIV', 'Lyα']
+        line_list = [18756.1, 12818.1, 6564.6, 5008.2, 4862.7, 2800.0, 1908.7, 1550.0, 1215.67]
+        line_names = ['Paα', 'Paβ','Hα', '[OIII]', 'Hβ', 'MgII', 'CIII]', 'CIV', 'Lyα']
         
         for line_wave, line_name in zip(line_list, line_names):
             line_wave_obs = line_wave * (1 + redshift) * 1e-4  # Convert to microns, observer frame
